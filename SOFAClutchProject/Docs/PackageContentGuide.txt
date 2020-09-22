@@ -1,0 +1,46 @@
+
+
+This package contains the source code required for using the clutch component in SOFA, as well as several example scenes to show how to construct scenes with different types of components likely to be used alongside the clutches. Examples for interfacing with LCM through a Python controller are included so that outside software can read the state of a simulation and send control actions.
+
+Example scenes:
+
+cylinder_orthogonal_test.py -- demonstrates how to use an anisotropic material to deform a mesh during simulation. This example uses an orthogonal anisotropy to deform the mesh along 2 axes. Although this is not necessarily a realistic control action to take, it is a good example of manipulating run time properties. Uses the cylinder_orthogonal_stiffness_controller.py controller.
+
+cylinder_demo_concentric_clutch.py -- demonstrates the clutch component in action. This demo is similar to the orthogonal test, with the exception that the anisotropies are concentric and the controller controls the clutches outwardly concentrically. Uses the concentric_clutch_controller.py controller.
+
+shell_LCM_test.py -- simple example of LCM being used to send the state of the mesh over test channel TEST_OUT. This output can be viewed with the LCMmonitor.py script in the LCMmessages folder. The controller can be used by pressed ctrl+shift+ +/- to inflate or deflate the sphere. Uses the shell_LCM_controller.py controller.
+
+Spring_demo.py -- a modification on a demo included in the SoftRobots package. This example is included to show the use of a volumetric mesh/mapping to lower dimension mesh in conjunction with inflation, as well as primitive collision. WARNING: this demo runs very slowly, but may be used as a basis for fixing the collisions in the TriangleCollision scene. After this issue is fixed, a more efficient method of calculating collisions can be used. Uses the spriny_controller.py controller.
+
+TriangleCollision.py -- attempts to integrate collisions with inflation/clutch components. This scene currently is broken, as the nodes containing the sphere and cylinder are deleted on collision. Uses the concentric_clutch_controller.py controller.
+
+
+
+Example Controllers:
+
+concentric_clutch_controller.py -- controllers the cylinder mesh, with the triangles in the mesh divided into concentric rings, then divided along one axis. This allows the user to manually engage and disengage different sections of clutches to see the impact on inflation. Use ctrl+shift+ +/- to inflate deflate the mesh. Use ctrl+(numbers 1 to 0 plus - and =) to toggle the axial and transverse clutches in different concentric sections of mesh.
+
+shell_LCM_controller.py -- controller used by shell_LCM_test.py. Demonstrates sending the state over LCM, as well as inflating and deflating a simple sphere. Use ctrl+shift+ +/- to inflate/deflate the sphere, and the LCMmonitor to view the output. 
+
+cylinder_orthogonal_stiffness_controller.py -- controls the inflate and axial/transverse stiffness of an anisotropic mesh. ctrl+shift+ +/- inflates/deflates the mesh, ctrl+ +/- increase/decrease the axial stiffness of the mesh (along the black lines), and ctrl+ 1/2 increase/decrease the transverse stiffness of the mesh.
+
+springy_controller.py -- similar controls for inflation: use ctrl+ +/- to inflate/deflate the mesh.
+
+
+
+The included code for the clutch component can be placed into a source build of SOFA. Instructions for this process are included in the build instructions doc.
+
+All of the included examples rely on the SoftRobots plugin from DEFROST Robotics:  This plugin provides components for simulating surface pressure on an object, which is the intended use case of the clutch component, although it could be used in any simulation that a triangular FEM component would be used (generally simulating a thin surface). 
+
+
+Main online docs: 
+SOFA does not have detailed documentation, however there are numerous example scenes found in the source code of SOFA. The best source of online documentation I have found is an overview of the different capabilities of the simulator, and I would recommend reading through it to learn about the basics of how the simulator works:
+
+https://www.sofa-framework.org/community/doc/
+
+
+
+
+
+
+

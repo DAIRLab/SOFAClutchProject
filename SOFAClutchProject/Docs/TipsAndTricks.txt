@@ -1,0 +1,43 @@
+
+
+Useful things to know about SOFA:
+
+
+When building scenes:
+
+The order that components are added usually does not matter, but may impact the order in which different components are drawn. This could hide different things you need to see in the scene.
+
+There are numerouos components required for each scene in order for it to run, but the type of components depends on what the scene should do, please refer to the example scenes and this link: https://www.sofa-framework.org/community/doc/ to get a sense of the components required. Some of the major ones include: RequiredPlugins, AnimationLoops, CollisionPipelines, GenericContraintSolvers, and ODE and linear solvers on each moving object.
+
+I would recommend looking into the STLIB plugin for quality of life components, I did not use them in my scenes because I wanted control over the exact components while I learned to use the simulator but these may make constructing scenes faster in the future.
+
+Remember to return the root node objectat the end of the createScene function.
+
+When making controllers:
+
+The onKeyPressed callback has an argument that returns the key that was pressed. In order to trigger this callback during simulation, YOU MUST ALSO HOLD CTRL WHILE PRESSING THE BUTTON.
+
+There are a number of different callbacks that can be used with a python controller, however the most common ones are used in the LCM controller in this example. 
+
+Traversing the scene tree from a controller for a particular node can be done with: node.getChild('name').
+
+Finding a particular component on a node can be done with: node.getObject('componentName') (these names can be set in the scene file by adding the optional argument name='componentName' to any component)
+
+Reading and writing data to a component is done differently depending on if the data you are trying to modify is a "Property" (in the gui and created by a Data object in the component constructor) or a "Vector" (again as seen in the gui). Properties are get/set by component.findData('propertyName').value, and Vectors are get/set by component.vectorName
+
+When developing custom components:
+
+The convention is the SOFA codebase is to give each component a .h file for declarations, a .inl for component logic, and a .cpp file for registering the component in the factory system. 
+
+msg_info() << "" , msg_warning() << "", and msg_error() << "" can all potentially be used for printing out debug messages, although I found that msg_error() was the only one that printed immeadiately (not sure if other steps are needed to send the other messages to the terminal). 
+
+I would recommend launch sofa from a terminal so that output messages can be seen. This can be done by running build/bin/runSofa.
+
+The draw function for components can be overloaded to provide visualization within the gui (the clutch component does this for showing which clutches are active).
+
+Double clicking a component you are testing in the gui will bring up a window of its Data properties. This can be helpful for viewing the values within your component at runtime.
+
+If you are adding additional components to an existing plugin, don't forget to add your source files to the CMakeLists.txt source file lists so they are built.
+
+
+

@@ -1,0 +1,10 @@
+
+To add the clutch component to a scene, use the following syntax:
+
+nodeToAddClutchTo.createObject('TriangularClutchFEMForceField', template='Vec3d', name='whatYouWantToCallThisComponent', method='large', poissonRatio='0.3',  youngModulus='5000', transverseYoungModulus='5000',fiberCenter='0 0 0',fiberAngle='90')
+
+It is recommended to only use this component on meshes that also have a Triangular(Anisotropic)FEMForceField component also attached, as this is the intended use case of this component. It is highly recommended to only keep the method set to 'large', as the clutch will likely be used in a case with large deformation from the initial shape. It is also recommended not to set the youngModulus or transverseYoungModulus to exactly 0, as this can cause numerical errors. 
+
+This component has both an axial and transverse activation, and the state of the clutch in those directions can be toggled on or off indiviually. These can be set for each element on a triangular mesh with the fields "AxialClutchActivation" and TransverseClutchActivation". These fields should be a vector of 1s and 0s that is the same length as the number of elements in the mesh. The element for an activated clutch should turn red if either the transverse or axial clutch is activated. See concentric_clutch_controller.py for an example. 
+
+These clutches are simulated as an extra anisotropic field on the mesh, of which only certain elements are active at a time. As such, it is important to realize that activating a clutch in a particular direction can also change the response of the element to forces in the orthogonal direction as well. This is because the corotational model used in calculating the forces on the vertices from deformation considers the area of the initial element (in the clutch case this is the area of the element when the clutch was activated). Expanding an element along one axis can change the element area, which can cause forces along the orthogonal axis as well.

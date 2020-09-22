@@ -1,0 +1,35 @@
+
+Current Issues:
+
+Scenes:
+
+The TriangleCollision.py scene is currently broken. The cylinder and sphere nodes break once contact between the two object is made. I believe this a product of the solvers being used to resolve the contact constraints, however I have been uable to find a setup that works correctly. See springy_demo.py for an example of collisions working (albeit very slowly/somewhat unstably). Simpler collision models should be investigated once the solvers are able to resolve contact.
+
+
+Controller: 
+
+One simple example of sending the state of mesh out via LCM is included in shell_LCM_test.py. A trival (but important) extension of this is reading LCM control messages from an outside source. A comment is left in the script where this should occur. An example of reading incoming LCM messages is included in LCMmonitor.py.
+
+Source: 
+
+A known bug occurs in the initialization of the clutch component, I have not been able to find the source of this bug. Occasionally when the clutch component is initialized, the clutch does not respond to input changing the state of the clutches for the remainder of the simulation. I have observed this occuring even in cases where the controller is correctly setting the clutch toggle data (through the gui). This appears to occur inconsistently, and using the shortcut ctrl+r to reload the scene can fix this (though again the behavior is inconsistent, so you may run into the same bug on reload). 
+
+Another bug is the clutch component also can cause the simulation to crash in the first frame of use after initialization, this bug also appears inconsistently but (in my use) has always been solved by using ctrl+r to reload the scene. It is likely that this is a product of bad initialization on the part of the clutch component, but I have not been able to determine it's cause.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

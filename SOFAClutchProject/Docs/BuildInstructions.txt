@@ -1,0 +1,13 @@
+
+In order to use the examples in this package, you must first download the source for both SOFA and the SoftRobots plugin. The recommended way to do this is to download both sofa and the softrobots plugin from the DEFROST team website:
+
+https://project.inria.fr/softrobot/install-get-started-2/download/
+
+Follow the instructions for "Installing from Source Code" to download and build the required repositories (Inverse pluging not necessary). Follow the link at the bottom of the page to build for the system you are using. I would recommend making sure that just the simulator and SoftRobots plugin build and run correctly before attempting to add the clutch component included in this package. Building SOFA for the first time make take a while, possibly 30 minutes or more. The SoftRobots plugin has numerous examples to check that the simulator built correctly. 
+
+Once SOFA and the SoftRobots plugin have successfully built, the code for defining a clutch component can be placed into the project. In order to incorporate the clutch component, copy all of the .cpp, .h, and .inl files from the SrcCode folder into the SofaMiscFem module folder in the SOFA source files. This module should be located at src/modules/SofaMiscFem. BE SURE TO REMOVE THE OLD TriangularAnisotropicFEMForceField.h/.cpp/.inl AND TriangularFEMForceField.h/.cpp/.inl FROM THE FOLDER BEFORE TRYING TO REBUILD THE PROJECT. After this, replace the CMakeLists.txt file in  the same folder (or add TriangularClutchFEMForceField to he build source files if other modifications need to be made).
+
+After these files have been correctly placed, you can run make from the build/SofaMisc/SofaMiscFem directory to rebuild just the SofaMiscFem module with the added clutch component.
+
+See cylinder_demo_concentric_clutch and the corresponding controller for an example of how to use and control the clutch component.
+
